@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Autenticación Max y TNT Sports</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 20px;
+        }
+        h1, h2 {
+            color: #333;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .dropdown, .steps {
+            margin-top: 20px;
+        }
+        label {
+            font-weight: bold;
+        }
+        select, button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .steps {
+            margin-top: 20px;
+            background-color: #f1f1f1;
+            padding: 15px;
+            border-radius: 5px;
+        }
+        ul {
+            padding-left: 20px;
+        }
+        li {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Autenticación en Max para Ver TNT Sports</h1>
+    <p>Selecciona tu operador para Max y TNT Sports, y te explicaremos cómo autenticarte para disfrutar del fútbol argentino.</p>
+
+    <div class="dropdown">
+        <label for="maxOperator">¿Con qué operador tienes acceso a Max?</label>
+        <select id="maxOperator">
+            <option value="No tengo cuenta en Max">No tengo cuenta en Max</option>
+            <option value="Telecentro">Telecentro</option>
+            <option value="DirecTV">DirecTV</option>
+            <option value="Flow">Flow</option>
+            <option value="Claro">Claro</option>
+            <option value="Movistar">Movistar</option>
+            <option value="Colsecor">Colsecor</option>
+            <option value="Directo con Max">Directo con Max</option>
+            <option value="Mercado Libre">Mercado Libre</option>
+        </select>
+    </div>
+
+    <div class="dropdown">
+        <label for="tntOperator">¿Con qué operador tienes acceso a TNT Sports?</label>
+        <select id="tntOperator">
+            <option value="No tengo suscripcion a TNT Sports">No tengo suscripción a TNT Sports</option>
+            <option value="Pack Futbol - Telecentro">Pack Futbol - Telecentro</option>
+            <option value="Pack Futbol - DirecTV">Pack Futbol - DirecTV</option>
+            <option value="Pack Futbol - Flow">Pack Futbol - Flow</option>
+            <option value="Pack Futbol - Claro">Pack Futbol - Claro</option>
+            <option value="Pack Futbol - Movistar">Pack Futbol - Movistar</option>
+            <option value="Pack Futbol - Colsecor">Pack Futbol - Colsecor</option>
+            <option value="Directo - Telecentro">Directo - Telecentro</option>
+        </select>
+    </div>
+
+    <button onclick="showSteps()">Ver Pasos de Autenticación</button>
+
+    <div class="steps" id="steps" style="display: none;">
+        <h2>Pasos para Autenticación:</h2>
+        <ul id="stepsList"></ul>
+    </div>
+</div>
+
+<script>
+    function showSteps() {
+        const maxOperator = document.getElementById('maxOperator').value;
+        const tntOperator = document.getElementById('tntOperator').value;
+        const stepsList = document.getElementById('stepsList');
+        const stepsDiv = document.getElementById('steps');
+
+        stepsList.innerHTML = '';
+
+        if (maxOperator === "No tengo cuenta en Max" && tntOperator === "No tengo suscripcion a TNT Sports") {
+            stepsList.innerHTML = `
+                <li>Suscríbete a TNT Sports en <a href="https://tntsports.com.ar/Suscribite" target="_blank">tntsports.com.ar/Suscribite</a>.</li>
+                <li>Suscríbete a Max en <a href="https://www.max.com" target="_blank">max.com</a>.</li>
+                <li>Autentícate en la aplicación Max para disfrutar de TNT Sports y el catálogo completo de Max.</li>
+            `;
+        } else if (maxOperator !== "No tengo cuenta en Max" && tntOperator === "No tengo suscripcion a TNT Sports") {
+            stepsList.innerHTML = `
+                <li>Suscríbete a TNT Sports en <a href="https://tntsports.com.ar/Suscribite" target="_blank">tntsports.com.ar/Suscribite</a>.</li>
+                <li>Autentícate en Max para disfrutar de los contenidos de TNT Sports.</li>
+            `;
+        } else if (maxOperator === "No tengo cuenta en Max" && tntOperator !== "No tengo suscripcion a TNT Sports") {
+            stepsList.innerHTML = `
+                <li>Descarga la aplicación de Max desde tu tienda de aplicaciones.</li>
+                <li>Selecciona "Iniciar sesión con mi operador".</li>
+                <li>Introduce tus credenciales proporcionadas por ${tntOperator} para acceder a TNT Sports en Max.</li>
+            `;
+        } else if (maxOperator === tntOperator) {
+            stepsList.innerHTML = `
+                <li>Descarga la aplicación de Max desde tu tienda de aplicaciones.</li>
+                <li>Selecciona "Iniciar sesión con mi operador".</li>
+                <li>Introduce tus credenciales de ${maxOperator} para acceder automáticamente a Max y TNT Sports.</li>
+            `;
+        } else {
+            stepsList.innerHTML = `
+                <li>Si utilizas el mismo email en Max y TNT Sports, ambos servicios estarán disponibles automáticamente en la aplicación Max.</li>
+                <li>Si usas emails diferentes, contacta a <a href="https://help.max.com/cl/Answer/Detail/000002551" target="_blank">@ayudaMax</a> para integrar tus cuentas.</li>
+            `;
+        }
+
+        stepsDiv.style.display = 'block';
+    }
+</script>
+
+</body>
+</html>
